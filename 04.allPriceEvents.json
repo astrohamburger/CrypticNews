@@ -1,0 +1,111 @@
+[{
+ $lookup: {
+  from: 'cryptoEvents',
+  localField: '_id',
+  foreignField: '_id',
+  as: 'crypto'
+ }
+}, {
+ $lookup: {
+  from: 'priceEvents',
+  localField: '_id',
+  foreignField: 'DayDate',
+  as: 'bitcoin'
+ }
+}, {
+ $addFields: {
+  BitcoinVolumeBTC: {
+   $arrayElemAt: [
+    '$bitcoin.Volume BTC',
+    0
+   ]
+  },
+  BitcoinVolumeUSD: {
+   $arrayElemAt: [
+    '$bitcoin.Volume USD',
+    0
+   ]
+  },
+  BitcoinClose: {
+   $arrayElemAt: [
+    '$bitcoin.close',
+    0
+   ]
+  },
+  BitcoinHigh: {
+   $arrayElemAt: [
+    '$bitcoin.high',
+    0
+   ]
+  },
+  BitcoinLow: {
+   $arrayElemAt: [
+    '$bitcoin.low',
+    0
+   ]
+  },
+  BitcoinOpen: {
+   $arrayElemAt: [
+    '$bitcoin.open',
+    0
+   ]
+  },
+  CryptoGoldstein_avg: {
+   $arrayElemAt: [
+    '$crypto.cryptoGoldstein_avg',
+    0
+   ]
+  },
+  CryptoGoldstein_gamma: {
+   $arrayElemAt: [
+    '$crypto.cryptoGoldstein_gamma',
+    0
+   ]
+  },
+  CryptoGoldstein_max: {
+   $arrayElemAt: [
+    '$crypto.cryptoGoldstein_max',
+    0
+   ]
+  },
+  CryptoGoldstein_min: {
+   $arrayElemAt: [
+    '$crypto.cryptoGoldstein_min',
+    0
+   ]
+  },
+  CryptoTone_avg: {
+   $arrayElemAt: [
+    '$crypto.cryptoTone_avg',
+    0
+   ]
+  },
+  CryptoTone_gamma: {
+   $arrayElemAt: [
+    '$crypto.cryptoTone_gamma',
+    0
+   ]
+  },
+  CryptoTone_max: {
+   $arrayElemAt: [
+    '$crypto.cryptoTone_max',
+    0
+   ]
+  },
+  CryptoTone_min: {
+   $arrayElemAt: [
+    '$crypto.cryptoTone_min',
+    0
+   ]
+  }
+ }
+}, {
+ $unset: [
+  'bitcoin',
+  'crypto'
+ ]
+}, {
+ $merge: {
+  into: 'allPriceEvents'
+ }
+}]

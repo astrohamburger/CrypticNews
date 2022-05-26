@@ -1,0 +1,54 @@
+[{
+ $addFields: {
+  DayDate: {
+   $toInt: {
+    $substr: [
+     '$DATEADDED',
+     0,
+     10
+    ]
+   }
+  }
+ }
+}, {
+ $group: {
+  _id: '$DayDate',
+  eventsGoldstein_avg: {
+   $avg: '$GoldsteinScale'
+  },
+  eventsGoldstein_min: {
+   $min: '$GoldsteinScale'
+  },
+  eventsGoldstein_max: {
+   $max: '$GoldsteinScale'
+  },
+  eventsTone_avg: {
+   $avg: '$AvgTone'
+  },
+  eventsTone_min: {
+   $min: '$AvgTone'
+  },
+  eventsTone_max: {
+   $max: '$AvgTone'
+  }
+ }
+}, {
+ $addFields: {
+  eventsGoldstein_gamma: {
+   $subtract: [
+    '$eventsGoldstein_max',
+    '$eventsGoldstein_min'
+   ]
+  },
+  eventsTone_gamma: {
+   $subtract: [
+    '$eventsTone_max',
+    '$eventsTone_min'
+   ]
+  }
+ }
+}, {
+ $merge: {
+  into: 'allEvents'
+ }
+}]

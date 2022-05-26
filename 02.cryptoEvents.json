@@ -1,0 +1,71 @@
+[{
+ $addFields: {
+  DayDate: {
+   $toInt: {
+    $substr: [
+     '$DATEADDED',
+     0,
+     10
+    ]
+   }
+  }
+ }
+}, {
+ $match: {
+  $or: [
+   {
+    SOURCEURL: RegExp(".*crypto.*")
+   },
+   {
+    SOURCEURL: RegExp(".*bitcoin.*")
+   },
+   {
+    SOURCEURL: RegExp(".*ethereum.*")
+   },
+   {
+    SOURCEURL: RegExp(".*nft.*")
+   }
+  ]
+ }
+}, {
+ $group: {
+  _id: '$DayDate',
+  cryptoGoldstein_avg: {
+   $avg: '$GoldsteinScale'
+  },
+  cryptoGoldstein_min: {
+   $min: '$GoldsteinScale'
+  },
+  cryptoGoldstein_max: {
+   $max: '$GoldsteinScale'
+  },
+  cryptoTone_avg: {
+   $avg: '$AvgTone'
+  },
+  cryptoTone_min: {
+   $min: '$AvgTone'
+  },
+  cryptoTone_max: {
+   $max: '$AvgTone'
+  }
+ }
+}, {
+ $addFields: {
+  cryptoGoldstein_gamma: {
+   $subtract: [
+    '$cryptoGoldstein_max',
+    '$cryptoGoldstein_min'
+   ]
+  },
+  cryptoTone_gamma: {
+   $subtract: [
+    '$cryptoTone_max',
+    '$cryptoTone_min'
+   ]
+  }
+ }
+}, {
+ $merge: {
+  into: 'cryptoEvents'
+ }
+}]

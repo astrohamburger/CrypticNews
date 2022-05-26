@@ -1,0 +1,31 @@
+[{
+ $match: {
+  $and: [
+   {
+    date: {
+     $gte: ISODate('2022-05-01T00:00:00.000Z')
+    }
+   },
+   {
+    date: {
+     $lte: ISODate('2022-05-31T00:00:00.000Z')
+    }
+   }
+  ]
+ }
+}, {
+ $addFields: {
+  DayDate: {
+   $toInt: {
+    $dateToString: {
+     format: '%Y%m%d%H',
+     date: '$date'
+    }
+   }
+  }
+ }
+}, {
+ $merge: {
+  into: 'priceEvents'
+ }
+}]
