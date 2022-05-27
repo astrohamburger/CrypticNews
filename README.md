@@ -60,5 +60,8 @@ Run the the following aggregations
 // TODO
 
 a. for allPriceEvents use a Time Series
+
 b. make a dashboard on Charts for the data
+
 c. auto-grow hourly the data set
+
