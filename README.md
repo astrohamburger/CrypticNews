@@ -4,6 +4,10 @@
 
 This is a set of aggregations working on GDELT 2.0 (https:/gdeltproject.org) data set in MongoDB. 
 
+## Disclaimer
+
+:( This project isn't complete :(
+
 ## Quick Start
 
 Load the GDELT data into MongoDB as described in https://github.com/jdrumgoole/gdelttools
@@ -54,3 +58,7 @@ Run the the following aggregations
  ```
 	  
 // TODO
+
+a. for allPriceEvents use a Time Series
+b. make a dashboard on Charts for the data
+c. auto-grow hourly the data set
