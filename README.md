@@ -6,7 +6,7 @@ This is a set of aggregations working on GDELT 2.0 (https:/gdeltproject.org) dat
 
 ## Disclaimer
 
-:( This project isn't complete :(
+:( This project is incomplete :(
 
 ## Quick Start
 
